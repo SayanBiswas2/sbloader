@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body{
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    height:70vh;
+  }
+  button{
+    width: 85vw;
+    height: 55px;
+    background-color:lightgreen;
+    border-radius:20px;
+    border: 0px;
+    font-size:2rem;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    
+  }
+  a{
+    text-decoration:none;
+  }
+</style>
+<body>
+<a href="/static/DB/{{filename}}" download>
+  <button onclick="window.location.href = '/';">
+    <img src="/static/download-logo.png" height="100%">
+    Download</button>
+</a>
+</body>
+</html>

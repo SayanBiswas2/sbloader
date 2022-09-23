@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <title>SBLoader Application</title>
+    <link rel="icon" type="image/x-icon" href="/static/logo.png">
+  </head>
+  <style>
+  *{
+    border: 1px sold red;
+    padding: 0px;
+  }
+  body{
+    overflow: hidden;
+  }
+  p{
+    font-size: 15px;
+    margin: 0px;
+    margin-bottom: 10px;
+    color: gray;
+  }
+  a{
+    text-decoration: none;
+  }
+  strong{
+    color: black;
+  }
+  .box{
+    display: flex;
+    width: 100vw;
+    height: 30vh;
+  }
+  #ss{
+    display: flex;
+    height: 30vh;
+    overflow: scroll;
+  }
+  #ss img{
+    width: 30vw;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 0.6px solid black;
+  }
+  #install{
+    width: 100vw;
+    height: 15vh;
+  }
+  .desc{
+    width: 100vw;
+    height: 25vh;
+  }
+  #icon{
+    width: 25vw;
+    height: 25vw;
+    border-radius: 20px;
+    margin: 30px auto;
+  }
+  #Download{
+    width: 80vw;
+    height: 50%;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #09c327;
+    margin: auto auto;
+    border: 0;
+  }
+  #Download img{
+    height: 90%;
+  }
+  .info{
+    width: 60vw;
+  }
+  
+  #img-box{
+    display: none;
+    position: absolute;
+    top: 0px;
+    margin: 20px 10vw;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #img-con{
+    width: 80vw;
+    box-shadow: 10px 10px 30px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  #img-con img{
+    width: 100%;
+  }
+  #close{
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    position: absolute;
+    bottom: -7vh;
+    margin: 0px auto;
+    z-index: 100;
+  }
+  </style>
+  <body>
+    <div class="body">
+      <div class="box">
+        <img src="/static/logo.png" id="icon">
+        <div class="info">
+          <h2><strong>SBLoader</strong><h2>
+          <p>Download SM video...</p>
+          <p><strong>Devoloper:</strong>Sayan Biswas</p>
+          <p><strong>App size:</strong>2.2MB</p>
+          <p><strong>Release Date:</strong>27Aug 2022</p>
+          <p><strong>Price:</strong>free</p>
+        </div>
+      </div>
+      <div id="install">
+        <a href="/static/logo.png" Download><button id="Download"><img src="/static/download-logo.png">Install<button></a>
+      </div>
+      <div id="ss">
+        <img src="/static/ss1.png" onclick="image('/static/ss1.png')">
+        <img src="/static/ss2.png" onclick="image('/static/ss2.png')">
+        <img src="/static/ss3.png" onclick="image ('/static/ss3.png')">
+      </div>
+      <div id="img-box">
+        <div id="img-con">
+          <img src="/static/ss3.png">
+        </div>
+        <div id="close" onclick="Close()">
+          <h1>×</h1>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function image(image){
+      console.log(image);
+      let img=document.getElementById('img-con')
+      let frame=document.getElementById('img-box')
+      img.innerHTML=`<img src="${image}">`;
+      frame.style.display="flex"
+      
+    };
+    function Close(){
+      let frame=document.getElementById('img-box')
+      
+      frame.style.display="none"
+      console.log('hello')
+    };
+  </script>
+</html>

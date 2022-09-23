@@ -1,0 +1,386 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <title>SBDownloader</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="icon" type="image/x-icon" href="/static/logo.png">
+<link rel="manifest" href="{% static 'manifest.webmainfest' %}"> 
+  </head>
+  <style>
+    .navbar{
+      width:100vw;
+    }
+    body{
+      /*background-color: #192841;*/
+    }
+    *{
+      /*color: white;*/
+    }
+    
+    .circle{
+      width: 40vw;
+      height: 40vw;
+      position: fixed;
+      border-radius: 100%;
+      background-color: red;
+      z-index: 100;
+      filter: opacity(.2);
+      box-shadow:red 5px 5px 30px 20px;
+    }
+    main{
+      display: flex;
+      flex-direction:column;
+      align-items: center;
+      justify-content:center;
+      text-align:center;
+      position:sticky;
+      padding-bottom:0px;
+    }
+
+    main p{
+      margin-left:10px;
+      margin-right:10px;
+      
+      color:gray;
+    }
+    #form1 input, #form1 button{
+      margin:0px;
+      height:55px;
+      border-color:darkblue;
+    }
+    #form1 input{
+      border-color: darkblue;
+      border-radius:10px 4px 4px 10px;
+      /*background: transparent;*/
+    }
+    #form1 button{
+      border-radius:5px 10px 10px 5px;
+      border:0px;
+      background-color: darkblue;
+      color:white;
+    }
+    #form1{
+      background-color:darkblue;
+      border-radius:10px;
+      <!--animation: shake 0.5s infinite;-->
+    }
+
+#term{
+font-size:0.6rem;
+margin-top:7px;
+
+}
+#term a{
+text-decoration: none;
+  color:darkblue;
+}
+.thumb{
+  width:95vw;
+}
+
+
+    .btn{
+      margin:0px;
+    }
+
+strong{
+  color:darkblue;
+}
+    .navbar strong{
+      color:white;
+    }
+
+    footer{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content:center;
+      margin-bottom:20px;
+      margin-top:20px;
+    }
+    .logo{
+      width:30px;
+    }
+    *{
+      overflow-x:hidden;
+    }
+    .info p{
+      width:80vw;
+      margin:10px;
+      margin-left:10vw;
+      
+    }
+    .info h6{
+      width:90vw;
+      margin-left:5vw;
+    }
+    .info h3,.info h2{
+      margin-top:20px;
+      margin-bottom:20px;
+    }
+    .info h2{
+      font-size:1.4rem;
+    }
+    .info img{
+      width:50px;
+margin-top:60px;
+
+    }
+    #email{
+      color: black;
+      text-decoration:none;
+    }
+    #loading{
+      display: none;
+      width:20vw;
+    }
+    
+    #downloadFrame{
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 90vw;
+      left: 5vw;
+      top: 10px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: black 10px 10px 150px 10px;
+      animation: Frame 1s 1;
+    }
+    
+    #downloadButton{
+      width: 75vw;
+    height: 50px;
+    background-color:lightgreen;
+    border-radius:20px;
+    border: 0px;
+    font-size:2rem;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    
+    }
+    
+    #CloseButton{
+      position: absolute;
+      right: 7px;
+      top: 0px;
+      border: 0px;
+      font-size: 30px;
+      padding: 0px;
+      background-color: white;
+    }
+    
+    a{
+      text-decoration: none;
+    }
+    @keyframes shake{
+      20%{
+        transform: translate(-4px);
+      }
+      40%{
+        transform: translate(4px);
+      }
+      60%{
+        transform: translate(-4px);
+      }
+      80%{
+        transform: translate(4px);
+      }
+    }
+    
+    @keyframes Frame{
+      0%{
+        top: -50vh;
+      }
+      100%{
+        top: 10px;
+      }
+    }
+  </style>
+  <body>
+    
+     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/static/author.jpg"><img src="/static/logo.png" width="37" height="40">SBLoader.com</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/youtube">YouTube Downloader</a>
+        <a class="nav-link" href="/facebook" style="pointer-events: none;">Facebook Downloader(Coming Soon)</a>
+        <a class="nav-link" href="/instagram" style="pointer-events: none;">Instagram Downloader(Coming Soon)</a>
+      </div>
+    </div>
+  </div>
+</nav>
+    {% if err %}
+    <div class="worning">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Error!</strong> Some error occurred please try again later.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endif %}
+    <br>
+    <br> 
+    <main>
+      <h1>YouTube Downloader!</h1>
+      <p>Download YouTube videos in MP3, MP4, MKV,... and many more formats</p>
+      <br>
+      <form action="/youtube/" method="get" id="form1">
+        {% csrf_token %}
+        <input name="first" value="False" hidden>
+        <input name="link" type="url" id="text-box" placeholder="Search or Paste link hear...." value="{{url}}" required>
+        <button type="submit" onclick="load()">Submit</button>
+      </form>
+      <p id="term">By using our service you are accepting our <a href="/terms">Terms & Condition</a></p>
+<br>
+<img src="{{thum}}" class="thumb">
+      <h6>{{title}}</h6>
+      <p>{{len}}</p>
+      <br>
+      <img src="/static/loading.gif" id="loading">
+<div class="table">
+  <table class="table caption-top">
+  <!--<caption>List of users</caption>-->
+  <thead>
+    {% if res %}
+    <tr>
+      <th scope="col">Resolution</th>
+      <th scope="col">Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      {% for i in res %}
+    <tr>
+      <td>{{i}}</td>
+      <td>
+        <form action="/youtube/" method="post" id="form2">
+{% csrf_token %}
+          <input name="link" type="url" value="{{url}}" hidden>
+<input name="res" type="text" value="{{i}}" hidden>
+        <button type="submit" class="btn btn-success" onclick="loading()" style="background-color: #33cc33; border:0px;" ><img src="/static/download-logo.png" height="30px" >Download</button>
+</form>
+      </td>
+    </tr>
+      {% endfor %}
+      {% endif %}
+  </tbody>
+  </table>
+</div>
+
+    </main>
+    <hr>
+<div class="info d-flex flex-column">
+  <div class="text-center">
+    <div class="">
+      <h2><strong>The best YouTube Video Downloader</strong></h2>
+      <h6>         
+SBLoader YouTube Downloader helps you download any YouTube video in the best quality. Download YouTube videos in MP3, MP4, 3GP, M4A, and many more formats. Our downloader is for free and does not require any software or registration. </h6>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="">
+    <div class="comment-box p-l-md"></div>
+    <div class="text-center mt-8">
+      <div class="row">
+        <div class="">
+          <div class="info-img"><img src="/static/boom.png"></div>
+          <h3><strong>Free download</strong></h3>
+          <p>Convert and download YouTube videos as much as you want without limitation and always free.</p>
+        </div>
+        <div class="">
+          <div class="info-img"><img src="/static/👍.png"></div>
+          <h3><strong>Fast and easy to use</strong></h3>
+          <p>Just paste the link or type in the search box to get ready to download.</p>
+        </div>
+      </div>
+    <div class="row">
+    <div class="">
+    <div class="ingo-img"><img src="/static/setting.png"></div>
+    <h3><strong>No registration required</strong></h3>
+                                <p>Our downloader is free and you can download any video without user registration.</p>
+    </div>
+  <div class="">
+    <div class="info-img"><img src="/static/download.png"></div>
+                                <h3><strong>Best to download</strong></h3>
+                                <p>The conversion and download speed is extremely fast. You do not need to wait long to get the MP3 or MP4 files.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+<hr>
+{% if name %}
+<div id="downloadFrame">
+  <button id="CloseButton" onclick="Close()">×</button>
+  <h3>{{name}}</h3>
+  <hr>
+  <a href="/static/DB/{{filename}}" download>
+  <button id="downloadButton">
+    <img src="/static/download-logo.png" height="100%">
+    Download</button>
+</a>
+<br>
+<br>
+<p>
+  Thank you for using our service. If you could share our website with your friends, that would be a great help.
+</p>
+<br>
+<h3>Thank you!</h3>
+</div>
+{% endif %}
+    <footer>
+      <a href="mailto: sayanbiswas6073@gmail.com" id="email"><h6>&copy2022 ytdownloader.repl.co</h6><a>
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-muted" href="https://mobile.twitter.com/SAYANBI65126661?first_run=false"><img src="/static/twitter.jpg" class="logo"></a></li>
+            <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/sayanbiswas6073/?funlid=OGBrWGozhAcaeBgH"><img src="/static/instagram.jpg" class="logo"></a></li>
+                <li class="ms-3"><a class="text-muted" href="https://www.facebook.com/profile.php?id=100056755894484"><img src="/static/facebook.jpg" class="logo"></a></a></li>
+  </ul>
+    </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+     if('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register("{% static 'sw.js' %}")
+            .then(function() { console.log("Tada! Your service worker is now registered"); });
+    }
+    
+    
+    
+      function load() {
+        let url= document.getElementById("text-box");
+        
+        if(url.value != ''){
+document.getElementById("loading").style.display = "block";
+        }
+        let item = document.getElementById('form1')
+        if(!url.checkValidity()){
+          
+        item.style.animation = 'shake 0.5s 1';
+        }
+      }
+      function loading() {
+        document.getElementById("loading").style.display = "block";
+      }
+      async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      };
+      
+      async function Close(){
+        document.getElementById("downloadFrame").style.display = "none";
+        await sleep(5000);
+        window.location.href = '/'; 
+      }
+    </script>
+  </body>
+ 
+</html>
